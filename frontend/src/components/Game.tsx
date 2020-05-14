@@ -34,6 +34,16 @@ export default class Game extends React.Component<any, any> {
     this.setState({grid: grid});
   }
 
+  detectCollision(tetromino, dx, dy) {
+    for (let block of tetromino.blocks) {
+      if (!(0 <= block[0] + dx && block[0] + dx < 10) ||
+          !(0 <= block[1] + dy && block[1] + dy < 20)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   componentDidMount() {
     const gameContainer = document.getElementById("main-game");
     for (let i = 0; i < 20; i++) {
@@ -44,9 +54,19 @@ export default class Game extends React.Component<any, any> {
 
     if (!this.state.activeTetromino) this.setState({activeTetromino: new Square()})
 
-    window.addEventListener("keydown", () => {
+    window.addEventListener("keydown", event => {
+      if (event.keyCode === 37) {
+        if (!this.detectCollision(this.state.activeTetromino, -1, 0))
+          this.state.activeTetromino.updatePosition(-1, 0);
+      } else if (event.keyCode === 39) {
+        if (!this.detectCollision(this.state.activeTetromino, 1, 0))
+          this.state.activeTetromino.updatePosition(1, 0);
+      } else if (event.keyCode === 40) {
+        if (!this.detectCollision(this.state.activeTetromino, 0, 1))
+          this.state.activeTetromino.updatePosition(0, 1);
+      }
+
       this.drawTetromino(this.state.activeTetromino);
-      this.state.activeTetromino.updatePosition(0, 1);
     })
   }
 
