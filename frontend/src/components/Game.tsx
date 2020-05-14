@@ -7,35 +7,47 @@ import "./game.css";
 
 const GRID_SIZE = 20;
 
-export default class Game extends React.Component {
+export default class Game extends React.Component<any, any> {
   constructor(props) {
       super(props);
-  }
 
-  drawSquare(x: number, y: number) {
-    const canvas = document.getElementById("main-game");
-    const ctx = (canvas as any).getContext("2d") as any;
+      const grid = [];
+      for (let i = 0; i < 20; i++) {
+        grid[i] = [];
+        for (let j = 0; j < 10; j++) {
+          grid[i][j] = document.createElement("div");
+          grid[i][j].classList.add("cell");
+        }
+      }
 
-    ctx.beginPath();
-    ctx.lineWidth = "1";
-    ctx.strokeStyle = "black";
-    ctx.fillStyle = "red";
-    ctx.rect(GRID_SIZE * x, GRID_SIZE * y, GRID_SIZE - 1, GRID_SIZE - 1);
-    ctx.fill();
-    ctx.rect(GRID_SIZE * x, GRID_SIZE * y, GRID_SIZE, GRID_SIZE);
-    ctx.stroke();
+      this.state = {
+        grid: grid,
+        activeTetromino: null
+      } 
   }
 
   drawTetromino(tetromino) {
+    const grid = this.state.grid;
     for (let block of tetromino.blocks) {
-      this.drawSquare(block[0], block[1]);
+      grid[block[1]][block[0]].style.backgroundColor = "red";
     }
+    this.setState({grid: grid});
   }
 
   componentDidMount() {
+    const gameContainer = document.getElementById("main-game");
+    for (let i = 0; i < 20; i++) {
+      for (let j = 0; j < 10; j++) {
+        gameContainer.appendChild(this.state.grid[i][j]);
+      }
+    }
+
+    if (!this.state.activeTetromino) this.setState({activeTetromino: new Square()})
+
     window.addEventListener("keydown", () => {
-      this.drawTetromino(new Square());
-    });
+      this.drawTetromino(this.state.activeTetromino);
+      this.state.activeTetromino.updatePosition(0, 1);
+    })
   }
 
   render() {
@@ -43,7 +55,8 @@ export default class Game extends React.Component {
       <Container style={{marginTop: "5vh"}}>
         <Row>
           <Col sm={8}>
-            <canvas id="main-game"/>
+            <div id="main-game">
+            </div>
           </Col>
           <Col sm={4}>
             <div>T</div>
