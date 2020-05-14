@@ -27,6 +27,12 @@ export default class Game extends React.Component<any, any> {
   }
 
   moveTetromino(keyCode) {
+    const grid = this.state.grid;
+
+    for (let block of this.state.activeTetromino.blocks) {
+      grid[block[1]][block[0]].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+    }
+
     if (keyCode === 37) {
       if (!this.detectCollision(this.state.activeTetromino, -1, 0))
         this.state.activeTetromino.updatePosition(-1, 0);
@@ -73,6 +79,10 @@ export default class Game extends React.Component<any, any> {
     })
 
     setInterval(() => {
+      const grid = this.state.grid;
+      for (let block of this.state.activeTetromino.blocks) {
+        grid[block[1]][block[0]].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+      }
       this.state.activeTetromino.updatePosition(0, 1);
       this.drawTetromino(this.state.activeTetromino);
     }, 1000);
