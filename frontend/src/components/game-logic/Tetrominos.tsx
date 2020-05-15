@@ -11,6 +11,10 @@ class Tetromino {
             block[1] += dy;
         }
     }
+
+    rotate() {
+        return null;
+    }
 }
 
 class Square extends Tetromino {
@@ -70,4 +74,98 @@ class Line extends Tetromino {
     }
 }
 
-export {Square, Line};
+class T extends Tetromino {
+    constructor() {
+        super();
+        this.blocks = [[6, 0], [7, 0], [8, 0], [7, 1]];
+        this.rotation = 0;
+    }
+
+    rotate() {
+        if (this.rotation % 4 == 0) {
+            this.blocks[0] = [this.blocks[0][0] + 1, this.blocks[0][1] - 1]
+            this.blocks[2] = [this.blocks[2][0] - 1, this.blocks[2][1] + 1]
+            this.blocks[3] = [this.blocks[3][0] - 1, this.blocks[3][1] - 1]
+        } else if (this.rotation % 4 == 1) {
+            this.blocks[0] = [this.blocks[0][0] + 1, this.blocks[0][1] + 1]
+            this.blocks[2] = [this.blocks[2][0] - 1, this.blocks[2][1] - 1]
+            this.blocks[3] = [this.blocks[3][0] + 1, this.blocks[3][1] - 1]
+        } else if (this.rotation % 4 == 2) {
+            this.blocks[0] = [this.blocks[0][0] - 1, this.blocks[0][1] + 1]
+            this.blocks[2] = [this.blocks[2][0] + 1, this.blocks[2][1] - 1]
+            this.blocks[3] = [this.blocks[3][0] + 1, this.blocks[3][1] + 1]
+        } else {
+            this.blocks[0] = [this.blocks[0][0] - 1, this.blocks[0][1] - 1]
+            this.blocks[2] = [this.blocks[2][0] + 1, this.blocks[2][1] + 1]
+            this.blocks[3] = [this.blocks[3][0] - 1, this.blocks[3][1] + 1]
+        }
+
+        this.rotation += 1
+    }
+}
+
+class L extends Tetromino {
+    constructor() {
+        super();
+        this.blocks =  [[6, 0], [7, 0], [8, 0], [8, 1]];
+        this.rotation = 0
+    }
+
+    rotate() {
+        const pivot = this.blocks[1];
+
+        if (this.rotation % 4 == 0) {
+            this.blocks[0] = [pivot[0], pivot[1] - 1]
+            this.blocks[2] = [pivot[0] - 1, pivot[1] + 1]
+            this.blocks[3] = [pivot[0], pivot[1] + 1]
+        } else if (this.rotation % 4 == 1) {
+            this.blocks[0] = [pivot[0] - 1, pivot[1]]
+            this.blocks[2] = [pivot[0] - 1, pivot[1] - 1]
+            this.blocks[3] = [pivot[0] + 1, pivot[1]]
+        } else if (this.rotation % 4 == 2) {
+            this.blocks[0] = [pivot[0] + 1, pivot[1] - 1]
+            this.blocks[2] = [pivot[0], pivot[1] - 1]
+            this.blocks[3] = [pivot[0], pivot[1] + 1]
+        } else {
+            this.blocks[0] = [pivot[0] + 1, pivot[1] + 1]
+            this.blocks[2] = [pivot[0] - 1, pivot[1]]
+            this.blocks[3] = [pivot[0] + 1, pivot[1]]
+        }
+
+        this.rotation += 1
+    }
+}
+
+class J extends Tetromino {
+    constructor() {
+        super();
+        this.blocks =  [[6, 0], [7, 0], [8, 0], [6, 1]];
+        this.rotation = 0
+    }
+
+    rotate() {
+        const pivot = this.blocks[1];
+
+        if (this.rotation % 4 == 0) {
+            this.blocks[0] = [pivot[0], pivot[1] - 1]
+            this.blocks[2] = [pivot[0] - 1, pivot[1] - 1]
+            this.blocks[3] = [pivot[0], pivot[1] + 1]
+        } else if (this.rotation % 4 == 1) {
+            this.blocks[0] = [pivot[0] - 1, pivot[1]]
+            this.blocks[2] = [pivot[0] + 1, pivot[1]]
+            this.blocks[3] = [pivot[0] + 1, pivot[1] - 1]
+        } else if (this.rotation % 4 == 2) {
+            this.blocks[0] = [pivot[0], pivot[1] + 1]
+            this.blocks[2] = [pivot[0], pivot[1] - 1]
+            this.blocks[3] = [pivot[0] + 1, pivot[1] + 1]
+        } else {
+            this.blocks[0] = [pivot[0] - 1, pivot[1]]
+            this.blocks[2] = [pivot[0] + 1, pivot[1]]
+            this.blocks[3] = [pivot[0] - 1, pivot[1] + 1]
+        }
+
+        this.rotation += 1
+    }
+}
+
+export {Square, Line, T, L, J};

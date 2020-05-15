@@ -1,11 +1,12 @@
 import React from 'react';
 import {Container, Row, Col} from "react-bootstrap";
 
-import {Square, Line} from "./game-logic/Tetrominos";
+import {Square, Line, T, L, J} from "./game-logic/Tetrominos";
 
 import "./game.css";
 
 const GRID_SIZE = 20;
+const TETROMINOS = [J];
 
 export default class Game extends React.Component<any, any> {
   constructor(props) {
@@ -104,7 +105,8 @@ export default class Game extends React.Component<any, any> {
       }
     }
 
-    if (!this.state.activeTetromino) this.setState({activeTetromino: new Line()})
+    const randomTetromino = TETROMINOS[Math.floor(Math.random() * TETROMINOS.length)];
+    if (!this.state.activeTetromino) this.setState({activeTetromino: new randomTetromino()})
 
     window.addEventListener("keydown", event => {
       if (event.keyCode === 38) this.rotateTetromino();
@@ -118,12 +120,13 @@ export default class Game extends React.Component<any, any> {
         for (let block of this.state.activeTetromino.blocks) {
           grid[block[1]][block[0]].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
         }
-        this.state.activeTetromino.updatePosition(0, 1);
+        //this.state.activeTetromino.updatePosition(0, 1);
       } else {
         for (let block of this.state.activeTetromino.blocks) {
           grid[block[1]][block[0]].storeBlock = true;
         }
-        this.setState({activeTetromino: new Line()});
+        const randomTetromino = TETROMINOS[Math.floor(Math.random() * TETROMINOS.length)];
+        this.setState({activeTetromino: new randomTetromino()});
       }
       this.drawTetromino(this.state.activeTetromino);
       this.detectCompleteRow();
