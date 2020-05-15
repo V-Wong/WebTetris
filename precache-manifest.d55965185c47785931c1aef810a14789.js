@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9a9ba62e9048c227d0398ae131d0f6d5",
+    "revision": "730ff98914426dcc1d138f9a0d6236d2",
     "url": "/WebTetris/index.html"
   },
   {
-    "revision": "796266b3a713bc7da8e6",
+    "revision": "38aed4d266fe1ffa3ed5",
     "url": "/WebTetris/static/css/2.de424728.chunk.css"
   },
   {
-    "revision": "e5830491a6c3e3faef63",
+    "revision": "9a76f30d04b783ba05ff",
     "url": "/WebTetris/static/css/main.62da18fb.chunk.css"
   },
   {
-    "revision": "796266b3a713bc7da8e6",
-    "url": "/WebTetris/static/js/2.55f89732.chunk.js"
+    "revision": "38aed4d266fe1ffa3ed5",
+    "url": "/WebTetris/static/js/2.cbde97ba.chunk.js"
   },
   {
     "revision": "3453b8997016469371284a28c0e873e2",
-    "url": "/WebTetris/static/js/2.55f89732.chunk.js.LICENSE.txt"
+    "url": "/WebTetris/static/js/2.cbde97ba.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "e5830491a6c3e3faef63",
-    "url": "/WebTetris/static/js/main.cd600cff.chunk.js"
+    "revision": "9a76f30d04b783ba05ff",
+    "url": "/WebTetris/static/js/main.2e408773.chunk.js"
   },
   {
     "revision": "f5a8c2f590daf1cab664",
