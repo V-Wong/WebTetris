@@ -1,9 +1,7 @@
 class Tetromino {
     blocks: Array<Array<number>>;
     rotation: number;
-    constructor() {
-        this.blocks = [];
-    }
+    colour: string;
 
     updatePosition(dx: number, dy: number) {
         for (let block of this.blocks) {
@@ -21,6 +19,7 @@ class Square extends Tetromino {
     constructor() {
         super();
         this.blocks = [[6, 0], [6, 1], [7, 0], [7, 1]];
+        this.colour = "red";
     }
 }
 
@@ -29,6 +28,7 @@ class Line extends Tetromino {
         super();
         this.blocks = [[6, 0], [6, 1], [6, 2], [6, 3]];
         this.rotation = 0;
+        this.colour = "blue";
     }
 
     rotate() {
@@ -79,6 +79,7 @@ class T extends Tetromino {
         super();
         this.blocks = [[6, 0], [7, 0], [8, 0], [7, 1]];
         this.rotation = 0;
+        this.colour = "green";
     }
 
     rotate() {
@@ -108,7 +109,8 @@ class L extends Tetromino {
     constructor() {
         super();
         this.blocks =  [[6, 0], [7, 0], [8, 0], [8, 1]];
-        this.rotation = 0
+        this.rotation = 0;
+        this.colour = "yellow";
     }
 
     rotate() {
@@ -141,6 +143,7 @@ class J extends Tetromino {
         super();
         this.blocks =  [[6, 0], [7, 0], [8, 0], [6, 1]];
         this.rotation = 0
+        this.colour = "orange";
     }
 
     rotate() {

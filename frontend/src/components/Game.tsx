@@ -6,7 +6,8 @@ import {Square, Line, T, L, J} from "./game-logic/Tetrominos";
 import "./game.css";
 
 const GRID_SIZE = 20;
-const TETROMINOS = [J];
+const TETROMINOS = [J, Square, Line, T, L, J];
+const DEFAULT_GRID_COLOUR = "rgba(255, 255, 255, 0.8)"
 
 export default class Game extends React.Component<any, any> {
   constructor(props) {
@@ -18,7 +19,7 @@ export default class Game extends React.Component<any, any> {
         for (let j = 0; j < 10; j++) {
           grid[i][j] = document.createElement("div");
           grid[i][j].classList.add("cell");
-          grid[i][j].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+          grid[i][j].style.backgroundColor = DEFAULT_GRID_COLOUR;
         }
       }
 
@@ -32,7 +33,7 @@ export default class Game extends React.Component<any, any> {
     const grid = this.state.grid;
 
     for (let block of this.state.activeTetromino.blocks) {
-      grid[block[1]][block[0]].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+      grid[block[1]][block[0]].style.backgroundColor = DEFAULT_GRID_COLOUR;
     }
 
     if (keyCode === 37) {
@@ -54,7 +55,7 @@ export default class Game extends React.Component<any, any> {
     if (!this.detectCollision(copyTetromino, 0, 0)) {
       const grid = this.state.grid;
       for (let block of this.state.activeTetromino.blocks) {
-        grid[block[1]][block[0]].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+        grid[block[1]][block[0]].style.backgroundColor = DEFAULT_GRID_COLOUR;
       }
   
       this.state.activeTetromino.rotate();
@@ -64,7 +65,7 @@ export default class Game extends React.Component<any, any> {
   drawTetromino(tetromino) {
     const grid = this.state.grid;
     for (let block of tetromino.blocks) {
-      grid[block[1]][block[0]].style.backgroundColor = "red";
+      grid[block[1]][block[0]].style.backgroundColor = tetromino.colour;
     }
     this.setState({grid: grid});
   }
@@ -118,7 +119,7 @@ export default class Game extends React.Component<any, any> {
       const grid = this.state.grid;
       if (!this.detectCollision(this.state.activeTetromino, 0, 1)) {
         for (let block of this.state.activeTetromino.blocks) {
-          grid[block[1]][block[0]].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+          grid[block[1]][block[0]].style.backgroundColor = DEFAULT_GRID_COLOUR;
         }
         //this.state.activeTetromino.updatePosition(0, 1);
       } else {
