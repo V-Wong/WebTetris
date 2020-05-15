@@ -82,13 +82,15 @@ export default class Game extends React.Component<any, any> {
   }
 
   detectCompleteRow() {
-    if (this.state.grid[19].every(x => x.storeBlock)) {
-      this.clearRow();
+    for (let i = 0; i < 20; i++) {
+      if (this.state.grid[i].every(x => x.storeBlock)) {
+        this.clearRow(i);
+      }
     }
   }
 
-  clearRow() {
-    for (let i = 18; i >= 0; i--) {
+  clearRow(rowNum) {
+    for (let i = rowNum - 1; i >= 0; i--) {
       for (let j = 0; j < 10; j++) {
         this.state.grid[i + 1][j].style.backgroundColor = 
             this.state.grid[i][j].style.backgroundColor;
