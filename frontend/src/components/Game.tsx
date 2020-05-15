@@ -79,6 +79,23 @@ export default class Game extends React.Component<any, any> {
     return false;
   }
 
+  detectCompleteRow() {
+    if (this.state.grid[19].every(x => x.storeBlock)) {
+      this.clearRow();
+    }
+  }
+
+  clearRow() {
+    for (let i = 18; i >= 0; i--) {
+      for (let j = 0; j < 10; j++) {
+        this.state.grid[i + 1][j].style.backgroundColor = 
+            this.state.grid[i][j].style.backgroundColor;
+        this.state.grid[i + 1][j].storeBlock = 
+            this.state.grid[i][j].storeBlock;
+      }
+    }
+  }
+
   componentDidMount() {
     const gameContainer = document.getElementById("main-game");
     for (let i = 0; i < 20; i++) {
@@ -109,6 +126,7 @@ export default class Game extends React.Component<any, any> {
         this.setState({activeTetromino: new Line()});
       }
       this.drawTetromino(this.state.activeTetromino);
+      this.detectCompleteRow();
     }, 100);
   }
 
