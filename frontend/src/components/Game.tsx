@@ -1,7 +1,7 @@
 import React from 'react';
 import {Container, Row, Col} from "react-bootstrap";
 
-import {Square} from "./game-logic/Tetrominos";
+import {Square, Line} from "./game-logic/Tetrominos";
 
 import "./game.css";
 
@@ -46,6 +46,20 @@ export default class Game extends React.Component<any, any> {
     }
   }
 
+  rotateTetromino() {
+    const copyTetromino = JSON.parse(JSON.stringify(this.state.activeTetromino));
+    copyTetromino.rotate = this.state.activeTetromino.rotate;
+    copyTetromino.rotate();
+    if (!this.detectCollision(copyTetromino, 0, 0)) {
+      const grid = this.state.grid;
+      for (let block of this.state.activeTetromino.blocks) {
+        grid[block[1]][block[0]].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+      }
+  
+      this.state.activeTetromino.rotate();
+    }
+  }
+
   drawTetromino(tetromino) {
     const grid = this.state.grid;
     for (let block of tetromino.blocks) {
@@ -73,9 +87,10 @@ export default class Game extends React.Component<any, any> {
       }
     }
 
-    if (!this.state.activeTetromino) this.setState({activeTetromino: new Square()})
+    if (!this.state.activeTetromino) this.setState({activeTetromino: new Line()})
 
     window.addEventListener("keydown", event => {
+      if (event.keyCode === 38) this.rotateTetromino();
       this.moveTetromino(event.keyCode);
       this.drawTetromino(this.state.activeTetromino);
     })
@@ -91,7 +106,7 @@ export default class Game extends React.Component<any, any> {
         for (let block of this.state.activeTetromino.blocks) {
           grid[block[1]][block[0]].storeBlock = true;
         }
-        this.setState({activeTetromino: new Square()});
+        this.setState({activeTetromino: new Line()});
       }
       this.drawTetromino(this.state.activeTetromino);
     }, 100);
