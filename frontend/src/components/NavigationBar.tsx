@@ -5,7 +5,7 @@ export default class NavigationBar extends React.Component {
     render() {
         return (
         <Navbar bg="dark" variant="dark">
-            <Navbar.Brand>Tetris Clone</Navbar.Brand>
+            <Navbar.Brand>Tetris Clone - Vincent Wong</Navbar.Brand>
             <Nav className="mr-auto">
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="https://github.com/V-Wong/WebTetris">Source Code</Nav.Link>
