@@ -17,6 +17,7 @@ export default class Game extends React.Component<any, any> {
         for (let j = 0; j < 10; j++) {
           grid[i][j] = document.createElement("div");
           grid[i][j].classList.add("cell");
+          grid[i][j].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
         }
       }
 
@@ -56,15 +57,12 @@ export default class Game extends React.Component<any, any> {
   detectCollision(tetromino, dx, dy) {
     for (let block of tetromino.blocks) {
       if (!(0 <= block[0] + dx && block[0] + dx < 10) ||
-          !(0 <= block[1] + dy && block[1] + dy < 20)) {
+          !(0 <= block[1] + dy && block[1] + dy < 20) ||
+          this.state.grid[block[1] + dy][block[0] + dx].storeBlock) {
         return true;
       }
     }
     return false;
-  }
-
-  autoDrop() {
-    
   }
 
   componentDidMount() {
@@ -84,13 +82,19 @@ export default class Game extends React.Component<any, any> {
 
     setInterval(() => {
       const grid = this.state.grid;
-      for (let block of this.state.activeTetromino.blocks) {
-        grid[block[1]][block[0]].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
-      }
-      if (!this.detectCollision(this.state.activeTetromino, 0, 1))
+      if (!this.detectCollision(this.state.activeTetromino, 0, 1)) {
+        for (let block of this.state.activeTetromino.blocks) {
+          grid[block[1]][block[0]].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
+        }
         this.state.activeTetromino.updatePosition(0, 1);
+      } else {
+        for (let block of this.state.activeTetromino.blocks) {
+          grid[block[1]][block[0]].storeBlock = true;
+        }
+        this.setState({activeTetromino: new Square()});
+      }
       this.drawTetromino(this.state.activeTetromino);
-    }, 1000);
+    }, 100);
   }
 
   render() {
