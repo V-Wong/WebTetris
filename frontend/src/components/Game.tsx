@@ -100,6 +100,10 @@ export default class Game extends React.Component<any, any> {
     }
   }
 
+  detectLose() {
+    if (this.state.grid[0].some(x => x.storeBlock)) alert("You lose");
+  }
+
   componentDidMount() {
     const gameContainer = document.getElementById("main-game");
     for (let i = 0; i < 20; i++) {
@@ -133,6 +137,7 @@ export default class Game extends React.Component<any, any> {
       }
       this.drawTetromino(this.state.activeTetromino);
       this.detectCompleteRow();
+      this.detectLose();
     }, 100);
   }
 
