@@ -82,11 +82,13 @@ export default class Game extends React.Component<any, any> {
   }
 
   detectCompleteRow() {
+    const completeRows = [];
     for (let i = 0; i < 20; i++) {
       if (this.state.grid[i].every(x => x.storeBlock)) {
-        this.clearRow(i);
+        completeRows.push(i);
       }
     }
+    return completeRows;
   }
 
   clearRow(rowNum) {
@@ -101,7 +103,7 @@ export default class Game extends React.Component<any, any> {
   }
 
   detectLose() {
-    if (this.state.grid[0].some(x => x.storeBlock)) alert("You lose");
+    return this.state.grid[0].some(x => x.storeBlock)
   }
 
   componentDidMount() {
@@ -136,8 +138,9 @@ export default class Game extends React.Component<any, any> {
         this.setState({activeTetromino: new randomTetromino()});
       }
       this.drawTetromino(this.state.activeTetromino);
-      this.detectCompleteRow();
-      this.detectLose();
+      const completeRows = this.detectCompleteRow();
+      for (let row of completeRows) this.clearRow(row);
+      if (this.detectLose()) alert("You lose");
     }, 100);
   }
 
