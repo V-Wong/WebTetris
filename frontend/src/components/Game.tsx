@@ -1,5 +1,4 @@
 import React from 'react';
-import {Container, Row, Col} from "react-bootstrap";
 
 import {Square, Line, T, L, J} from "./game-logic/Tetrominos";
 
@@ -129,7 +128,7 @@ export default class Game extends React.Component<any, any> {
         for (let block of this.state.activeTetromino.blocks) {
           grid[block[1]][block[0]].style.backgroundColor = DEFAULT_GRID_COLOUR;
         }
-        //this.state.activeTetromino.updatePosition(0, 1);
+        this.state.activeTetromino.updatePosition(0, 1);
       } else {
         for (let block of this.state.activeTetromino.blocks) {
           grid[block[1]][block[0]].storeBlock = true;
@@ -145,18 +144,6 @@ export default class Game extends React.Component<any, any> {
   }
 
   render() {
-    return (
-      <Container style={{marginTop: "5vh"}}>
-        <Row>
-          <Col sm={8}>
-            <div id="main-game">
-            </div>
-          </Col>
-          <Col sm={4}>
-            <div>T</div>
-          </Col>
-        </Row>
-      </Container>
-    );
+    return (<div id="main-game"></div>);
   }
 }
