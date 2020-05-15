@@ -63,6 +63,10 @@ export default class Game extends React.Component<any, any> {
     return false;
   }
 
+  autoDrop() {
+    
+  }
+
   componentDidMount() {
     const gameContainer = document.getElementById("main-game");
     for (let i = 0; i < 20; i++) {
@@ -83,7 +87,8 @@ export default class Game extends React.Component<any, any> {
       for (let block of this.state.activeTetromino.blocks) {
         grid[block[1]][block[0]].style.backgroundColor = "rgba(255, 255, 255, 0.8)";
       }
-      this.state.activeTetromino.updatePosition(0, 1);
+      if (!this.detectCollision(this.state.activeTetromino, 0, 1))
+        this.state.activeTetromino.updatePosition(0, 1);
       this.drawTetromino(this.state.activeTetromino);
     }, 1000);
   }
