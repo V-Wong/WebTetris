@@ -132,9 +132,12 @@ export default class Game extends React.Component<any, any> {
     if (!this.detectCollision(this.state.activeTetromino, 0, 1)) {
       // this.autoDropTetromino();
     } else {
-      this.storeBlock()
-      const randomTetromino = getRandomTetromino();
-      this.setState({activeTetromino: new randomTetromino()});
+      this.storeBlock();
+      const tetrominoRotation = this.state.tetrominoRotation;
+      const randomTetromino = tetrominoRotation.shift();
+      tetrominoRotation.push(getRandomTetromino());
+      this.setState({activeTetromino: new randomTetromino(),
+                     tetrominoRotation: tetrominoRotation});
     }
     this.drawTetromino(this.state.activeTetromino);
     for (let row of this.getCompleteRows()) this.clearRow(row);
