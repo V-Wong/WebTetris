@@ -171,4 +171,4 @@ class J extends Tetromino {
     }
 }
 
-export {Square, Line, T, L, J};
+export {Tetromino, Square, Line, T, L, J};

@@ -1,21 +1,26 @@
 import React from 'react';
 
-import {Square, Line, T, L, J} from "./game-logic/Tetrominos";
+import {Tetromino, Square, Line, T, L, J} from "./game-logic/Tetrominos";
 
 import "./game.css";
 
-const GRID_SIZE = 20;
+const GRID_HEIGHT = 20;
+const GRID_WIDTH = 10;
 const TETROMINOS = [J, Square, Line, T, L, J];
 const DEFAULT_GRID_COLOUR = "rgba(255, 255, 255, 0.8)"
+
+function getRandomTetromino() {
+  return TETROMINOS[Math.floor(Math.random() * TETROMINOS.length)];
+}
 
 export default class Game extends React.Component<any, any> {
   constructor(props) {
       super(props);
 
       const grid = [];
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < GRID_HEIGHT; i++) {
         grid[i] = [];
-        for (let j = 0; j < 10; j++) {
+        for (let j = 0; j < GRID_WIDTH; j++) {
           grid[i][j] = document.createElement("div");
           grid[i][j].classList.add("cell");
           grid[i][j].style.backgroundColor = DEFAULT_GRID_COLOUR;
@@ -28,11 +33,9 @@ export default class Game extends React.Component<any, any> {
       } 
   }
 
-  moveTetromino(keyCode) {
-    const grid = this.state.grid;
-
+  moveTetromino(keyCode: number) {
     for (let block of this.state.activeTetromino.blocks) {
-      grid[block[1]][block[0]].style.backgroundColor = DEFAULT_GRID_COLOUR;
+      this.state.grid[block[1]][block[0]].style.backgroundColor = DEFAULT_GRID_COLOUR;
     }
 
     if (keyCode === 37) {
@@ -61,18 +64,16 @@ export default class Game extends React.Component<any, any> {
     }
   }
 
-  drawTetromino(tetromino) {
-    const grid = this.state.grid;
+  drawTetromino(tetromino: Tetromino) {
     for (let block of tetromino.blocks) {
-      grid[block[1]][block[0]].style.backgroundColor = tetromino.colour;
+      this.state.grid[block[1]][block[0]].style.backgroundColor = tetromino.colour;
     }
-    this.setState({grid: grid});
   }
 
-  detectCollision(tetromino, dx, dy) {
+  detectCollision(tetromino: Tetromino, dx: number, dy: number) {
     for (let block of tetromino.blocks) {
-      if (!(0 <= block[0] + dx && block[0] + dx < 10) ||
-          !(0 <= block[1] + dy && block[1] + dy < 20) ||
+      if (!(0 <= block[0] + dx && block[0] + dx < GRID_WIDTH) ||
+          !(0 <= block[1] + dy && block[1] + dy < GRID_HEIGHT) ||
           this.state.grid[block[1] + dy][block[0] + dx].storeBlock) {
         return true;
       }
@@ -80,9 +81,9 @@ export default class Game extends React.Component<any, any> {
     return false;
   }
 
-  detectCompleteRow() {
+  getCompleteRows() {
     const completeRows = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < GRID_HEIGHT; i++) {
       if (this.state.grid[i].every(x => x.storeBlock)) {
         completeRows.push(i);
       }
@@ -90,9 +91,9 @@ export default class Game extends React.Component<any, any> {
     return completeRows;
   }
 
-  clearRow(rowNum) {
+  clearRow(rowNum: number) {
     for (let i = rowNum - 1; i >= 0; i--) {
-      for (let j = 0; j < 10; j++) {
+      for (let j = 0; j < GRID_WIDTH; j++) {
         this.state.grid[i + 1][j].style.backgroundColor = 
             this.state.grid[i][j].style.backgroundColor;
         this.state.grid[i + 1][j].storeBlock = 
@@ -101,20 +102,46 @@ export default class Game extends React.Component<any, any> {
     }
   }
 
+  autoDropTetromino() {
+    for (let block of this.state.activeTetromino.blocks) {
+      this.state.grid[block[1]][block[0]].style.backgroundColor = DEFAULT_GRID_COLOUR;
+    }
+    this.state.activeTetromino.updatePosition(0, 1);
+  }
+
+  storeBlock() {
+    for (let block of this.state.activeTetromino.blocks) {
+      this.state.grid[block[1]][block[0]].storeBlock = true;
+    }
+  }
+
   detectLose() {
     return this.state.grid[0].some(x => x.storeBlock)
   }
 
+  runGame() {
+    if (!this.detectCollision(this.state.activeTetromino, 0, 1)) {
+      this.autoDropTetromino();
+    } else {
+      this.storeBlock()
+      const randomTetromino = getRandomTetromino();
+      this.setState({activeTetromino: new randomTetromino()});
+    }
+    this.drawTetromino(this.state.activeTetromino);
+    for (let row of this.getCompleteRows()) this.clearRow(row);
+    if (this.detectLose()) alert("You lose");
+  }
+
   componentDidMount() {
     const gameContainer = document.getElementById("main-game");
-    for (let i = 0; i < 20; i++) {
-      for (let j = 0; j < 10; j++) {
+    for (let i = 0; i < GRID_HEIGHT; i++) {
+      for (let j = 0; j < GRID_WIDTH; j++) {
         gameContainer.appendChild(this.state.grid[i][j]);
       }
     }
 
-    const randomTetromino = TETROMINOS[Math.floor(Math.random() * TETROMINOS.length)];
-    if (!this.state.activeTetromino) this.setState({activeTetromino: new randomTetromino()})
+    const randomTetromino = getRandomTetromino();
+    this.setState({activeTetromino: new randomTetromino()})
 
     window.addEventListener("keydown", event => {
       if (event.keyCode === 38) this.rotateTetromino();
@@ -123,23 +150,7 @@ export default class Game extends React.Component<any, any> {
     })
 
     setInterval(() => {
-      const grid = this.state.grid;
-      if (!this.detectCollision(this.state.activeTetromino, 0, 1)) {
-        for (let block of this.state.activeTetromino.blocks) {
-          grid[block[1]][block[0]].style.backgroundColor = DEFAULT_GRID_COLOUR;
-        }
-        this.state.activeTetromino.updatePosition(0, 1);
-      } else {
-        for (let block of this.state.activeTetromino.blocks) {
-          grid[block[1]][block[0]].storeBlock = true;
-        }
-        const randomTetromino = TETROMINOS[Math.floor(Math.random() * TETROMINOS.length)];
-        this.setState({activeTetromino: new randomTetromino()});
-      }
-      this.drawTetromino(this.state.activeTetromino);
-      const completeRows = this.detectCompleteRow();
-      for (let row of completeRows) this.clearRow(row);
-      if (this.detectLose()) alert("You lose");
+      this.runGame();
     }, 100);
   }
 
