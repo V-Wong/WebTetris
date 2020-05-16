@@ -40,16 +40,21 @@ export default class TetrominoPreview extends React.Component<any, any> {
       }
     }
 
-    let index = 0;
+    let lastEnd = 0;
     for (let tetromino of this.props.rotation) {
       const piece = new tetromino();
+
+      if (piece.constructor.name === "Line") {
+        piece.rotate();
+      }
+
       for (let block of piece.blocks) {
         while (block[0] > 3) piece.updatePosition(-1, 0);
-        piece.updatePosition(0, index);
+        while (lastEnd && block[1] < lastEnd + 3) piece.updatePosition(0, 1);
       }
 
       this.drawTetromino(piece);
-      index += 1;
+      lastEnd = Math.max(...piece.blocks.map(x => x[1]));
     }
   }
 
