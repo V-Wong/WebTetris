@@ -29,9 +29,16 @@ export default class Game extends React.Component<any, any> {
         }
       }
 
+      const randomTetromino = getRandomTetromino();
+
+      const tetrominoRotation = [];
+      for (let i = 0; i < 5; i++) 
+        tetrominoRotation.push(getRandomTetromino());
+
       this.state = {
         grid: grid,
-        activeTetromino: null
+        activeTetromino: new randomTetromino(),
+        tetrominoRotation: tetrominoRotation
       } 
   }
 
@@ -142,9 +149,6 @@ export default class Game extends React.Component<any, any> {
       }
     }
 
-    const randomTetromino = getRandomTetromino();
-    this.setState({activeTetromino: new randomTetromino()})
-
     window.addEventListener("keydown", event => {
       if (event.keyCode === 38) this.rotateTetromino();
       this.moveTetromino(event.keyCode);
@@ -164,7 +168,7 @@ export default class Game extends React.Component<any, any> {
             <div id="main-game"/>
           </Col>
           <Col sm={5}>
-            <TetrominoPreview/>
+            <TetrominoPreview rotation={this.state.tetrominoRotation}/>
           </Col>
         </Row>
       </Container>
