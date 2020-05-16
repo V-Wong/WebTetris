@@ -1,13 +1,13 @@
 #main-game {
     display: grid;
-    grid-template-columns: repeat(10, 1.5vw);
-    grid-template-rows: repeat(20, 1.5vw);
+    grid-template-columns: repeat(10, 2vw);
+    grid-template-rows: repeat(20, 2vw);
 }
 
 #tetromino-preview {
     display: grid;
-    grid-template-columns: repeat(4, 1.5vw);
-    grid-template-rows: repeat(20, 1.5vw);
+    grid-template-columns: repeat(4, 2vw);
+    grid-template-rows: repeat(20, 2vw);
 }
 
 .cell {

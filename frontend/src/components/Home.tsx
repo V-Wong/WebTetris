@@ -6,7 +6,7 @@ import Game from "./Game";
 export default class Home extends React.Component {
   render() {
     return (
-      <Container style={{marginTop: "5vh"}}>
+      <Container style={{width: "100%", marginTop: "2vh"}}>
         <Row>
           <Col sm={6}>
             <Game/>
