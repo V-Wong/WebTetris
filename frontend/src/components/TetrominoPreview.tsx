@@ -34,9 +34,9 @@ export default class TetrominoPreview extends React.Component<any, any> {
   drawRotation() {
     if (!this.props.rotation) return;
 
-    for (let i = 0; i < GRID_HEIGHT; i++) {
-      for (let j = 0; j < 4; j++) {
-        this.state.grid[i][j].style.backgroundColor = DEFAULT_GRID_COLOUR;
+    for (let row of this.state.grid) {
+      for (let cell of row) {
+        cell.style.backgroundColor = DEFAULT_GRID_COLOUR;
       }
     }
 
@@ -60,9 +60,9 @@ export default class TetrominoPreview extends React.Component<any, any> {
 
   componentDidMount() {
     const previewContainer = document.getElementById("tetromino-preview");
-    for (let i = 0; i < GRID_HEIGHT; i++) {
-      for (let j = 0; j < 4; j++) {
-        previewContainer.appendChild(this.state.grid[i][j]);
+    for (let row of this.state.grid) {
+      for (let cell of row) {
+        previewContainer.appendChild(cell);
       }
     }
     this.drawRotation();

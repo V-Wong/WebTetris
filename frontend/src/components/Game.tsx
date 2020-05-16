@@ -92,7 +92,7 @@ export default class Game extends React.Component<any, any> {
 
   getCompleteRows() {
     const completeRows = [];
-    for (let i = 0; i < GRID_HEIGHT; i++) {
+    for (let i in this.state.grid) {
       if (this.state.grid[i].every(x => x.storeBlock)) {
         completeRows.push(i);
       }
@@ -102,7 +102,7 @@ export default class Game extends React.Component<any, any> {
 
   clearRow(rowNum: number) {
     for (let i = rowNum - 1; i >= 0; i--) {
-      for (let j = 0; j < GRID_WIDTH; j++) {
+      for (let j in this.state.grid[i]) {
         this.state.grid[i + 1][j].style.backgroundColor = 
             this.state.grid[i][j].style.backgroundColor;
         this.state.grid[i + 1][j].storeBlock = 
@@ -146,9 +146,9 @@ export default class Game extends React.Component<any, any> {
 
   componentDidMount() {
     const gameContainer = document.getElementById("main-game");
-    for (let i = 0; i < GRID_HEIGHT; i++) {
-      for (let j = 0; j < GRID_WIDTH; j++) {
-        gameContainer.appendChild(this.state.grid[i][j]);
+    for (let row of this.state.grid) {
+      for (let cell of row) {
+        gameContainer.appendChild(cell);
       }
     }
 
@@ -175,7 +175,6 @@ export default class Game extends React.Component<any, any> {
           </Col>
         </Row>
       </Container>
-      
     );
   }
 }
