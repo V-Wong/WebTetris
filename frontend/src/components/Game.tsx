@@ -130,7 +130,7 @@ export default class Game extends React.Component<any, any> {
 
   runGame() {
     if (!this.detectCollision(this.state.activeTetromino, 0, 1)) {
-      // this.autoDropTetromino();
+      this.autoDropTetromino();
     } else {
       this.storeBlock();
       const tetrominoRotation = this.state.tetrominoRotation;
