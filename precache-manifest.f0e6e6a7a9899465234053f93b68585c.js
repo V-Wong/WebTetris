@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "dd0275f99edc5148fda76ad56c4176fd",
+    "revision": "4ebca6ad6ace75c6ad3b865f1adbc09d",
     "url": "/WebTetris/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/WebTetris/static/css/2.de424728.chunk.css"
   },
   {
-    "revision": "3a4a2ffe5a85f42b6006",
+    "revision": "40135f6201755d1ff716",
     "url": "/WebTetris/static/css/main.6fc68bab.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/WebTetris/static/js/2.6c2602b3.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3a4a2ffe5a85f42b6006",
-    "url": "/WebTetris/static/js/main.9a6d0f0d.chunk.js"
+    "revision": "40135f6201755d1ff716",
+    "url": "/WebTetris/static/js/main.814f792d.chunk.js"
   },
   {
     "revision": "f5a8c2f590daf1cab664",
