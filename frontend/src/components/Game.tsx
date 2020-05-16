@@ -1,5 +1,7 @@
 import React from 'react';
+import {Container, Row, Col, Card} from "react-bootstrap";
 
+import TetrominoPreview from "./TetrominoPreview";
 import {Tetromino, Square, Line, T, L, J} from "./game-logic/Tetrominos";
 
 import "./game.css";
@@ -7,7 +9,7 @@ import "./game.css";
 const GRID_HEIGHT = 20;
 const GRID_WIDTH = 10;
 const TETROMINOS = [J, Square, Line, T, L, J];
-const DEFAULT_GRID_COLOUR = "rgba(255, 255, 255, 0.8)"
+const DEFAULT_GRID_COLOUR = "grey"
 
 function getRandomTetromino() {
   return TETROMINOS[Math.floor(Math.random() * TETROMINOS.length)];
@@ -121,7 +123,7 @@ export default class Game extends React.Component<any, any> {
 
   runGame() {
     if (!this.detectCollision(this.state.activeTetromino, 0, 1)) {
-      this.autoDropTetromino();
+      // this.autoDropTetromino();
     } else {
       this.storeBlock()
       const randomTetromino = getRandomTetromino();
@@ -155,6 +157,18 @@ export default class Game extends React.Component<any, any> {
   }
 
   render() {
-    return (<div id="main-game"></div>);
+    return (
+      <Container>
+        <Row>
+          <Col sm={7}>
+            <div id="main-game"/>
+          </Col>
+          <Col sm={5}>
+            <TetrominoPreview/>
+          </Col>
+        </Row>
+      </Container>
+      
+    );
   }
 }

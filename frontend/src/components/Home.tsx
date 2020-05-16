@@ -8,11 +8,8 @@ export default class Home extends React.Component {
     return (
       <Container style={{marginTop: "5vh"}}>
         <Row>
-          <Col sm={4}>
+          <Col sm={6}>
             <Game/>
-          </Col>
-          <Col sm={2}>
-            <div>Implement piece preview here</div>
           </Col>
           <Col sm={6}>
           <Card>
